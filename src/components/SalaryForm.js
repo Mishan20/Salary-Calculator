@@ -86,19 +86,24 @@ const SalaryForm = () => {
     setBasicSalary('');
   };
 
+  const formatNumber = (number) => number.toFixed(2);
+
   return (
     <div>
+      <div className='d-flex justify-content-between'>
+      <h5 className="card-title">Calculate Salary</h5>
       <Button variant="danger" onClick={handleReset}>Reset</Button>
+      </div>
       <div className="mb-3">
-        <label htmlFor="basicSalary" className="form-label">Basic Salary</label>
-        <input type="number" className="form-control" id="basicSalary" value={basicSalary} onChange={handleSalaryChange} />
+        <label htmlFor="basicSalary" className="form-label ">Basic Salary</label>
+        <input type="number" className="form-control w-50" id="basicSalary" value={basicSalary} onChange={handleSalaryChange} />
       </div>
       <div className="mb-3">
         <h5>Earnings</h5>
-        <ul className="list-group">
+        <ul className=" ">
           {earnings.map((earning, index) => (
-            <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-              {earning.name}: {earning.amount} {earning.epf ? "(EPF/ETF)" : ""}
+            <li key={index} className="list-group-item d-flex justify-content-left align-items-center">
+              {earning.name}: {formatNumber(earning.amount)} {earning.epf ? " ✅EPF/ETF" : ""}
               <span>
                 <Button variant="link" onClick={() => handleEditEarning(index)}>Edit</Button>
                 <Button variant="link" onClick={() => handleDeleteEarning(index)}>Delete</Button>
@@ -108,12 +113,12 @@ const SalaryForm = () => {
         </ul>
         <Button variant="link" onClick={handleShowEarningModal} className="mt-3">+ Add New Allowance</Button>
       </div>
-
+          <hr /> 
       <div className="mb-3">
         <h5>Deductions</h5>
-        <ul className="list-group">
+        <ul className=" ">
           {deductions.map((deduction, index) => (
-            <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
+            <li key={index} className="list-group-item d-flex justify-content-left align-items-center">
               {deduction.name}: {deduction.amount}
               <span>
                 <Button variant="link" onClick={() => handleEditDeduction(index)}>Edit</Button>

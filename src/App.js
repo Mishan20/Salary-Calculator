@@ -11,7 +11,6 @@ const App = () => {
           <div className="col-md-6">
             <div className="card">
               <div className="card-body">
-                <h5 className="card-title">Calculate Salary</h5>
                 <SalaryForm />
               </div>
             </div>
@@ -19,7 +18,6 @@ const App = () => {
           <div className="col-md-6">
             <div className="card">
               <div className="card-body">
-                <h5 className="card-title">Salary Details</h5>
                 <SalarySummary />
               </div>
             </div>
