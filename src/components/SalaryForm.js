@@ -10,6 +10,7 @@ const SalaryForm = () => {
   const [showDeductionModal, setShowDeductionModal] = useState(false);
   const [earningName, setEarningName] = useState('');
   const [earningAmount, setEarningAmount] = useState('');
+  const [epfApplicable, setEpfApplicable] = useState(false);
   const [deductionName, setDeductionName] = useState('');
   const [deductionAmount, setDeductionAmount] = useState('');
   const [editingEarningIndex, setEditingEarningIndex] = useState(null);
@@ -25,6 +26,7 @@ const SalaryForm = () => {
     setShowEarningModal(false);
     setEarningName('');
     setEarningAmount('');
+    setEpfApplicable(false);
     setEditingEarningIndex(null);
   };
 
@@ -37,7 +39,7 @@ const SalaryForm = () => {
   };
 
   const handleAddEarning = () => {
-    const newEarning = { name: earningName, amount: parseFloat(earningAmount) || 0 };
+    const newEarning = { name: earningName, amount: parseFloat(earningAmount) || 0, epf: epfApplicable };
     if (editingEarningIndex !== null) {
       dispatch({ type: 'UPDATE_EARNING', payload: { index: editingEarningIndex, earning: newEarning } });
     } else {
@@ -59,6 +61,7 @@ const SalaryForm = () => {
   const handleEditEarning = (index) => {
     setEarningName(earnings[index].name);
     setEarningAmount(earnings[index].amount);
+    setEpfApplicable(earnings[index].epf);
     setEditingEarningIndex(index);
     handleShowEarningModal();
   };
@@ -85,7 +88,6 @@ const SalaryForm = () => {
 
   return (
     <div>
-      <Button variant="danger" onClick={handleReset}>Reset</Button>
       <div className="mb-3">
         <label htmlFor="basicSalary" className="form-label">Basic Salary</label>
         <input type="number" className="form-control" id="basicSalary" value={basicSalary} onChange={handleSalaryChange} />
@@ -95,7 +97,7 @@ const SalaryForm = () => {
         <ul className="list-group">
           {earnings.map((earning, index) => (
             <li key={index} className="list-group-item d-flex justify-content-between align-items-center">
-              {earning.name}: {earning.amount}
+              {earning.name}: {earning.amount} {earning.epf ? "(EPF/ETF)" : ""}
               <span>
                 <Button variant="link" onClick={() => handleEditEarning(index)}>Edit</Button>
                 <Button variant="link" onClick={() => handleDeleteEarning(index)}>Delete</Button>
@@ -122,7 +124,7 @@ const SalaryForm = () => {
         <Button variant="link" onClick={handleShowDeductionModal} className="mt-3">+ Add New Deduction</Button>
       </div>
 
-      
+      <Button variant="danger" onClick={handleReset}>Reset</Button>
 
       <Modal show={showEarningModal} onHide={handleCloseEarningModal}>
         <Modal.Header closeButton>
@@ -137,6 +139,9 @@ const SalaryForm = () => {
             <Form.Group controlId="earningAmount">
               <Form.Label>Earning Amount</Form.Label>
               <Form.Control type="number" value={earningAmount} onChange={(e) => setEarningAmount(e.target.value)} />
+            </Form.Group>
+            <Form.Group controlId="epfApplicable">
+              <Form.Check type="checkbox" label="EPF/ETF Applicable" checked={epfApplicable} onChange={(e) => setEpfApplicable(e.target.checked)} />
             </Form.Group>
           </Form>
         </Modal.Body>
