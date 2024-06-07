@@ -88,6 +88,7 @@ const SalaryForm = () => {
 
   return (
     <div>
+      <Button variant="danger" onClick={handleReset}>Reset</Button>
       <div className="mb-3">
         <label htmlFor="basicSalary" className="form-label">Basic Salary</label>
         <input type="number" className="form-control" id="basicSalary" value={basicSalary} onChange={handleSalaryChange} />
@@ -124,7 +125,7 @@ const SalaryForm = () => {
         <Button variant="link" onClick={handleShowDeductionModal} className="mt-3">+ Add New Deduction</Button>
       </div>
 
-      <Button variant="danger" onClick={handleReset}>Reset</Button>
+      
 
       <Modal show={showEarningModal} onHide={handleCloseEarningModal}>
         <Modal.Header closeButton>
